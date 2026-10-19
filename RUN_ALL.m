@@ -10,8 +10,8 @@ runFolder=tempname(resultRoot); mkdir(runFolder);
 diary(fullfile(runFolder,'MATLAB_log.txt'));
 try
     fprintf('Run: %s\nMATLAB: %s\n',stamp,version);ver;
-    mainResult=run_main(fullfile(runFolder,'main'),true);
-    bonusResult=run_bonus(fullfile(runFolder,'bonus'),true);
+    mainResult=run_main(fullfile(runFolder,'main'),true,true);
+    bonusResult=run_bonus(fullfile(runFolder,'bonus'),true,true);
     save(fullfile(runFolder,'results.mat'),'mainResult','bonusResult');
     fid=fopen(fullfile(runFolder,'RUN_COMPLETE.txt'),'w');
     fprintf(fid,'Both tasks completed with all assertions passing.\n');fclose(fid);
@@ -23,3 +23,7 @@ diary off;
 archive=fullfile(root,['RETURN_TO_REVIEW_' stamp '.zip']);
 zip(archive,{'*'},runFolder);
 fprintf('\nSend this ZIP for verification:\n%s\n',archive);
+
+% Enable optional continuous playback only after all output collection is done.
+controls=findall(groot,'Tag','CamPlaybackControl');
+set(controls,'Enable','on');

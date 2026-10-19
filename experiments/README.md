@@ -20,3 +20,7 @@ Reproduce using Python with NumPy, SciPy and Matplotlib: `python experiments/che
 2. Confirm both animation windows display correctly and both AVI files play.
 3. Inspect `RUN_COMPLETE.txt` or `ERROR_REPORT.txt`, compare MAT results with the table above.
 4. Only after reviewing the actual results change the project status to validated in MATLAB.
+
+## Interactive playback check (pending MATLAB run)
+
+After RUN_ALL completes, press Play in each figure, Pause and Resume without a jump, Reset to angle zero, and close each figure. Confirm the other figure remains usable and no timer errors appear. AVI recording remains finite (three cycles each); playback controls do not modify saved video or numerical results.

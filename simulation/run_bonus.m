@@ -1,7 +1,8 @@
-function result=run_bonus(outDir, animate)
+function result=run_bonus(outDir, animate, deferPlayback)
 % Synthesis: 0 -> 10 -> 25 -> 0 mm, including intermediate dwells.
 if nargin<1, outDir=fullfile(fileparts(mfilename('fullpath')),'results','bonus'); end
 if nargin<2, animate=true; end
+if nargin<3, deferPlayback=false; end
 if ~exist(outDir,'dir'), mkdir(outDir); end
 schedule=[0 60 0 10;60 100 10 10;100 180 10 25; ...
           180 220 25 25;220 320 25 0;320 360 0 0];
@@ -35,6 +36,6 @@ result.rbStep=sizeStep; result.continuousCheck=continuousCheck;
 result.schedule=schedule; result.task='Synthesis: two-level stepped lift';
 disp('Symbolic pressure-angle bound for each moving stage:');disp(B);
 fprintf('Continuous Rb = %.9f mm; selected Rb = %.3f mm\n',bound,rb);disp(result);
-render_cam(model,rpm,outDir,'Synthesis: stepped lift 10 / 25 mm',animate);
+render_cam(model,rpm,outDir,'Synthesis: stepped lift 10 / 25 mm',animate,deferPlayback);
 save(fullfile(outDir,'result.mat'),'result','B','criticalU','segmentBounds','schedule');
 end

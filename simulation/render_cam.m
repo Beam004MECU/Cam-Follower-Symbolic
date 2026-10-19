@@ -1,4 +1,5 @@
-function render_cam(model,rpm,outDir,label,animate)
+function render_cam(model,rpm,outDir,label,animate,deferPlayback)
+if nargin<6, deferPlayback=false; end
 % Every animation coordinate comes from the same symbolic motion model.
 % No prescribed roller spin: passive rotation is omitted in the reduced model.
 th=linspace(0,2*pi,1801); G=model.geometry(th);
@@ -28,7 +29,10 @@ xlim(ax2,[0 360]);ylim(ax2,[-2 model.h+2]);
 yticks(ax2,unique([0;model.schedule(:,3);model.schedule(:,4)]));title(ax2,'Follower displacement');
 title(ax,sprintf('%s | Rb = %.1f mm',label,model.rb)); drawnow;
 print(fig,fullfile(outDir,'Render.png'),'-dpng','-r150');
-if ~animate, return; end
+if ~animate
+    install_cam_controls(fig,@updateFrame,omega,0,~deferPlayback);
+    return
+end
 writer=VideoWriter(fullfile(outDir,'Mechanism.avi'),'Motion JPEG AVI');
 writer.FrameRate=30; open(writer);
 try
@@ -36,6 +40,16 @@ try
     for frame=0:frames-1
         if ~ishandle(fig), error('cam:ClosedFigure','Animation window closed before completion.'); end
         angle=omega*frame/writer.FrameRate; a=mod(angle,2*pi);
+        updateFrame(a);
+        drawnow; writeVideo(writer,getframe(fig)); pause(1/writer.FrameRate);
+    end
+    close(writer);
+catch ME
+    close(writer); rethrow(ME);
+end
+install_cam_controls(fig,@updateFrame,omega,a,~deferPlayback);
+
+    function updateFrame(a)
         c=cos(a); s=sin(a); lift=model.motion(a); center=y0+lift(1);
         set(cam,'XData',c*G.x+s*G.y,'YData',-s*G.x+c*G.y);
         set(roller,'YData',center+model.rr*sin(circle));
@@ -44,10 +58,5 @@ try
         set(contact,'XData',c*local.x+s*local.y,'YData',-s*local.x+c*local.y);
         set(dot,'XData',a*180/pi,'YData',lift(1));
         title(ax,{label,sprintf('Rb %.1f mm | angle %.1f deg | lift %.2f mm',model.rb,a*180/pi,lift(1))});
-        drawnow; writeVideo(writer,getframe(fig)); pause(1/writer.FrameRate);
     end
-    close(writer);
-catch ME
-    close(writer); rethrow(ME);
-end
 end
