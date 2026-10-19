@@ -1,4 +1,16 @@
-# Verification status
+# Experiments
+
+## Test record
+
+- **Objective:** Verify symbolic kinematics, stepped-lift synthesis, geometry and recorded animation.
+- **Date / operator:** 2026-10-19 / Phurinat Chaikaow.
+- **Setup / equipment:** MATLAB R2026a Update 4 with Symbolic Math Toolbox 26.1 on macOS; numerical simulation only.
+- **Calibration:** Not applicable; no physical measuring instruments or measurements.
+- **Conditions / units:** Constant 60 rpm; prescribed motion schedules in the root README; mm, s and rad internally, degrees for reported angles.
+- **Procedure:** Run `RUN_ALL.m` from the repository root, inspect assertions and generated results, then compare against `check_reference.py` as described below.
+- **Data:** `matlab_results/` contains saved numerical results and the completion marker, not physical raw measurements; `reference_results.json` contains processed independent-check results.
+
+## Verification status
 
 Both cases passed the assertions in an actual MATLAB run on 19 October 2026, using MATLAB R2026a Update 4 and Symbolic Math Toolbox 26.1 on macOS. `RUN_COMPLETE.txt` reports: "Both tasks completed with all assertions passing." No error report was produced.
 
