@@ -23,6 +23,14 @@ Ya=model.motion(t); Yp=model.motion(t+dt); Ym=model.motion(t-dt);
 velocityResidual=max(abs((Yp(1,:)-Ym(1,:))/(2*dt)-Ya(2,:)));
 accelerationResidual=max(abs((Yp(2,:)-Ym(2,:))/(2*dt)-Ya(3,:)));
 assert(velocityResidual<1e-6 && accelerationResidual<1e-6,'Derivative check.');
+% Explicit left/right checks at every event boundary, including full-cycle wrap.
+joinAngles=model.schedule(:,1)'*pi/180;
+joinValues=model.schedule(:,3)';
+for side=[-1 0 1]
+    check=model.motion(joinAngles+side*1e-10);
+    assert(max(abs(check(1,:)-joinValues))<1e-7,'Discontinuous stage position.');
+    assert(max(max(abs(check(2:3,:))))<1e-5,'Discontinuous stage velocity/acceleration.');
+end
 result.h=model.h; result.rb=model.rb; result.rr=model.rr;
 result.maxPressureDeg=max(abs(G.phi)); result.minPitchRadius=rhoMin;
 result.minCamRadius=rhoMin-model.rr; result.minSampledGap=minGap;
