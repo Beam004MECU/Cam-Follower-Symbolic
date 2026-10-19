@@ -13,8 +13,8 @@ def motion(t,h,schedule=None):
     if schedule is None:schedule=[(0,90,0,h),(90,180,h,h),(180,270,h,0),(270,360,0,0)]
     t=np.mod(np.asarray(t),2*np.pi).reshape(-1);Y=np.zeros((4,t.size))
     for a,b,s0,s1 in schedule:
-        start=np.deg2rad(a);beta=np.deg2rad(b-a);delta=s1-s0
-        mask=(t>=start)&(t<start+beta);u=(t[mask]-start)/beta
+        start=np.deg2rad(a);stop=np.deg2rad(b);beta=stop-start;delta=s1-s0
+        mask=(t>=start)&(t<stop);u=(t[mask]-start)/beta
         Y[0,mask]=s0
         if delta:
             Y[:,mask]+=np.array([u-np.sin(2*np.pi*u)/(2*np.pi),1-np.cos(2*np.pi*u),2*np.pi*np.sin(2*np.pi*u),4*np.pi**2*np.cos(2*np.pi*u)])*np.array([delta/beta**d for d in range(4)])[:,None]
@@ -55,6 +55,10 @@ if __name__=='__main__':
         bounds.append(bound);roots.append(u)
     bound=max(bounds);rb=np.ceil(bound*2)/2
     results={'status':'Independent Python reference; stepped MATLAB revision not yet run','main':verify(20,40),'bonus_continuous':verify(25,bound,schedule),'bonus':verify(25,rb,schedule),'critical_u':roots,'stage_bounds':bounds}
+    for deg,value in [(a,s0) for a,b,s0,s1 in schedule]:
+        angle=np.deg2rad(deg)
+        for q in [np.nextafter(angle,-np.inf),angle,np.nextafter(angle,np.inf)]:
+            assert abs(motion([q],25,schedule)[0,0]-value)<1e-10
     for deg,value in [(80,10),(200,25),(340,0)]:
         Y=motion([np.deg2rad(deg)],25,schedule);assert abs(Y[0,0]-value)<1e-12 and np.max(abs(Y[1:3]))<1e-12
     (root/'experiments/reference_results.json').write_text(json.dumps(results,indent=2))
