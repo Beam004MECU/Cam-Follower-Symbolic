@@ -5,12 +5,20 @@ if nargin<5, enabled=true; end
 controlState='off'; if enabled,controlState='on';end
 currentAngle=initialAngle; anchorAngle=initialAngle;
 clockStart=[]; playbackTimer=[];
+speedValues=[0.1 0.25 0.5 1 2]; speedFactor=0.25;
 playButton=uicontrol(fig,'Style','pushbutton','String','Play', ...
-    'Units','normalized','Position',[.38 .015 .10 .045], ...
+    'Units','normalized','Position',[.28 .015 .10 .045], ...
     'Callback',@togglePlayback,'Tag','CamPlaybackControl','Enable',controlState);
 uicontrol(fig,'Style','pushbutton','String','Reset', ...
-    'Units','normalized','Position',[.50 .015 .10 .045], ...
+    'Units','normalized','Position',[.40 .015 .10 .045], ...
     'Callback',@resetPlayback,'Tag','CamPlaybackControl','Enable',controlState);
+uicontrol(fig,'Style','text','String','Playback speed', ...
+    'Units','normalized','Position',[.52 .015 .13 .035], ...
+    'BackgroundColor','w');
+speedMenu=uicontrol(fig,'Style','popupmenu', ...
+    'String',{'0.1x','0.25x','0.5x','1x','2x'},'Value',2, ...
+    'Units','normalized','Position',[.65 .015 .09 .045], ...
+    'Callback',@changeSpeed,'Tag','CamPlaybackControl','Enable',controlState);
 set(fig,'DeleteFcn',@disposeTimer);
 
     function togglePlayback(~,~)
@@ -30,9 +38,15 @@ set(fig,'DeleteFcn',@disposeTimer);
 
     function tick(~,~)
         if ~isgraphics(fig), return; end
-        currentAngle=mod(anchorAngle+omega*toc(clockStart),2*pi);
+        currentAngle=mod(anchorAngle+omega*speedFactor*toc(clockStart),2*pi);
         updateFrame(currentAngle);
         drawnow limitrate nocallbacks
+    end
+
+    function changeSpeed(~,~)
+        % Re-anchor at the visible angle to avoid a jump when changing speed.
+        anchorAngle=currentAngle; clockStart=tic;
+        speedFactor=speedValues(get(speedMenu,'Value'));
     end
 
     function resetPlayback(~,~)
