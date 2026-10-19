@@ -6,4 +6,4 @@
 - `validate_cam.m`: assertions and numerical geometric checks.
 - `render_cam.m`: visible mechanism, displacement plot, PNG and AVI.
 
-Run `RUN_ALL.m` in the repository root for both tasks and a diagnostic ZIP. Requires MATLAB with Symbolic Math Toolbox. Uses only MATLAB base routines besides symbolic operations; no Optimization Toolbox or Simscape required. Actual version compatibility awaits the first MATLAB run. Parameters are in the two entry functions; the bonus derivation currently fixes the pressure limit at 30 degrees and four equal 90-degree stages.
+Run `RUN_ALL.m` in the repository root for both tasks and a diagnostic ZIP. Requires MATLAB with Symbolic Math Toolbox. Uses only MATLAB base routines besides symbolic operations; no Optimization Toolbox or Simscape required. Actual version compatibility awaits the first MATLAB run. Parameters are in the two entry functions; the synthesis uses a 30-degree pressure limit and the six-stage schedule listed in the root README.

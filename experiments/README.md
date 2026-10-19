@@ -2,17 +2,17 @@
 
 **MATLAB runtime status: NOT YET EXECUTED.** No claim is made that MATLAB has passed. `RUN_ALL.m` collects actual MATLAB version, logs, results and AVI files into a timestamped ZIP. Send that ZIP even if an error occurs. Each run uses a new result directory so old successes cannot mask a failed run.
 
-Independent NumPy/SciPy calculation (`check_reference.py`) checked both designs and the continuous bonus bound:
+Independent NumPy/SciPy calculation (`check_reference.py`) checks the main case and the revised stepped synthesis:
 
-| Case | Lift mm | Rb mm | max abs pressure deg | min convex pitch radius mm |
+| Case | Max lift mm | Rb mm | max abs pressure deg | min convex pitch radius mm |
 |---|---:|---:|---:|---:|
 | Main | 20 | 40 | 25.142615 | 35.467560 |
-| Bonus continuous pressure bound | 30 | 47.528336 | 29.999999 | 41.823295 |
-| Bonus selected | 30 | 48 | 29.820448 | 42.170898 |
+| Stepped synthesis continuous bound | 25 | 33.385049 | 29.999997 | 22.024396 |
+| Stepped synthesis selected | 25 | 33.5 | 29.941155 | 22.103413 |
 
-The sampled global interference gap is within 2e-14 mm of zero (floating-point roundoff). The largest checked derivative residual is below 2.3e-8 in mm/rad or mm/rad². Geometry uses 14401 profile points and 361 roller positions. This is a numerical verification, not proof at all possible points or a test of real contact dynamics.
+The independent check confirms both dwell levels, the return and the derivative residuals (below 3.5e-8). The sampled interference gap is within floating-point roundoff of zero. Geometry uses 14401 profile points and 361 roller positions; this does not prove absence of interference at every possible point or validate forces.
 
-To reproduce this independent check: Python with NumPy, SciPy and Matplotlib; run `python experiments/check_reference.py` from the repository root. It also regenerates `media/links_joints.png`.
+Reproduce using Python with NumPy, SciPy and Matplotlib: `python experiments/check_reference.py`. It generates `reference_results.json` and `media/stepped_synthesis.png`. The main links/joints illustration remains the unchanged main design.
 
 ## Pending MATLAB checks
 

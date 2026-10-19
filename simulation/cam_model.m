@@ -1,5 +1,12 @@
-function model = cam_model(h, rb, rr)
-% Symbolic cycloidal cam, mm and rad; clockwise input; four 90-degree events.
+function model = cam_model(h, rb, rr, schedule)
+% Symbolic cycloidal cam; schedule columns: start deg, end deg, start mm, end mm.
+if nargin<4, schedule=[0 90 0 h;90 180 h h;180 270 h 0;270 360 0 0]; end
+assert(schedule(1,1)==0 && schedule(end,2)==360);
+assert(all(schedule(:,2)>schedule(:,1)));
+assert(all(abs(schedule(2:end,1)-schedule(1:end-1,2))<1e-10));
+assert(all(abs(schedule(2:end,3)-schedule(1:end-1,4))<1e-10));
+assert(schedule(1,3)==schedule(end,4));
+assert(min(min(schedule(:,3:4)))>=0 && max(max(schedule(:,3:4)))==h);
 assert(all(isfinite([h rb rr])) && all([h rb rr]>0),'Dimensions must be positive.');
 assert(license('test','Symbolic_Toolbox'),'Symbolic Math Toolbox is required.');
 syms u C real
@@ -19,25 +26,29 @@ assert(isAlways(simplify(subs(F,u,1-u)+F-1)==0));
 fun=cell(4,1);
 for k=1:4, fun{k}=matlabFunction(D(k),'Vars',u); end
 model.h=h; model.rb=rb; model.rr=rr; model.beta=double(beta);
-model.F=F; model.D=D; model.u=u;
-model.motion=@(theta)motion(theta,h,double(beta),fun);
-model.geometry=@(theta)geometry(theta,h,rb,rr,double(beta),fun);
+model.schedule=schedule; model.F=F; model.D=D; model.u=u;
+model.motion=@(theta)motion(theta,schedule,fun);
+model.geometry=@(theta)geometry(theta,rb,rr,schedule,fun);
 end
 
-function Y=motion(theta,h,beta,fun)
+function Y=motion(theta,schedule,fun)
 % Rows: s, ds/dtheta, d2s/dtheta2, d3s/dtheta3. Joins use right limits.
 th=mod(theta(:)',2*pi); Y=zeros(4,numel(th));
-for event=1:2
-    start=(event-1)*pi; direction=3-2*event;
+for k=1:size(schedule,1)
+    start=schedule(k,1)*pi/180; beta=(schedule(k,2)-schedule(k,1))*pi/180;
+    delta=schedule(k,4)-schedule(k,3);
     idx=th>=start & th<start+beta; u=(th(idx)-start)/beta;
-    for d=0:3, Y(d+1,idx)=direction*h/beta^d*fun{d+1}(u); end
-    if event==2, Y(1,idx)=h+Y(1,idx); end
+    Y(1,idx)=schedule(k,3);
+    if delta~=0
+        for d=0:3
+            Y(d+1,idx)=Y(d+1,idx)+delta/beta^d*fun{d+1}(u);
+        end
+    end
 end
-Y(1,th>=beta & th<pi)=h;
 end
 
-function G=geometry(theta,h,rb,rr,beta,fun)
-theta=theta(:)'; Y=motion(theta,h,beta,fun);
+function G=geometry(theta,rb,rr,schedule,fun)
+theta=theta(:)'; Y=motion(theta,schedule,fun);
 r=rb+rr+Y(1,:); ds=Y(2,:); d2s=Y(3,:);
 x=-r.*sin(theta); y=r.*cos(theta);
 dx=-ds.*sin(theta)-r.*cos(theta); dy=ds.*cos(theta)-r.*sin(theta);

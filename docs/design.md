@@ -8,12 +8,20 @@ $$\kappa_p=\frac{r^2+2s_\theta^2-rs_{\theta\theta}}{(r^2+s_\theta^2)^{3/2}}.$$
 
 Regularity requires 1−Rr κp>0. On convex parts, ρcam=ρpitch−Rr. Negative curvature is concavity, not automatically a failure. The 2 mm convex curvature allowance is a design input, not a strength safety factor.
 
-## Bonus pressure-angle minimum
+## Stepped-lift synthesis
 
-For the cycloidal rise, F′=1−cos(2πu), F″=2πsin(2πu). Let c=βtanφlimit. Then B′ is proportional to 2πsin(2πu)−c[1−cos(2πu)]. In 0<u<1 its only stationary root is
+Schedule: 0–60°: 0→10 mm; 60–100°: dwell 10 mm; 100–180°: 10→25 mm; 180–220°: dwell 25 mm; 220–320°: 25→0 mm; 320–360°: dwell 0 mm.
 
-$$u_* = \frac{1}{\pi}\tan^{-1}\left(\frac{2\pi}{\beta\tan\phi_{\max}}\right).$$
+For each moving stage define u=(θ−θstart)/β and s=s0+ΔF(u), where F is the symbolic cycloidal law. At both ends F′=F″=0, so s, velocity and acceleration join continuously with adjacent dwells. Jerk can jump finitely.
 
-The derivative changes from positive to negative there. Evaluate u=0,u*,1. Symmetry F(1−u)=1−F(u) and F′(1−u)=F′(u) gives the same pairs (s,|sθ|) during return; dwell has zero pressure angle. Thus this bound covers the whole cycle. For this stated design the pressure-angle solution also passes the sampled curvature check. Curvature and global interference tests remain numerical checks, not continuous mathematical proofs. The code stops if these checks fail; it does not claim a general optimizer for arbitrary motion laws or constraints.
+The pressure constraint requires B(u)=|Δ|F′/(βtan30°)−Rr−s0−ΔF. Differentiation gives B′=0 at the single interior point
 
-The main task uses an explicitly prescribed Rb=40 mm. The bonus uses a new h=30 mm and calculates Rb; it does not hardcode the final design.
+```math
+u_* = \frac{\operatorname{atan2}(2\pi,\operatorname{sgn}(\Delta)\beta\tan30^\circ)}{\pi}.
+```
+
+This follows by factoring sin(πu) from F″−sgn(Δ)βtan30° F′. The derivative changes from positive to negative at this point. Evaluate endpoints and this root for EVERY rise and fall; no rise/return symmetry is assumed for this schedule. Dwells have zero pressure angle.
+
+The three stage bounds are 23.385087, 15.323960 and 33.385049 mm; the return governs. Select Rb=33.5 mm. The continuous pressure minimum and rounded design both pass the numerical curvature and interference checks. The minimum sampled convex pitch radius is 22.103413 mm for the rounded design. These curvature/interference checks are numerical, not continuous mathematical proofs.
+
+The main task remains a prescribed Rb=40 mm, h=20 mm design. The synthesis solves the new motion schedule; it does not hardcode the answer.

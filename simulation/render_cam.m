@@ -24,8 +24,9 @@ ax2=subplot(1,2,2,'Parent',fig); hold(ax2,'on'); grid(ax2,'on');
 Y=model.motion(th); plot(ax2,th*180/pi,Y(1,:),'Color',[.1 .4 .6],'LineWidth',1.5);
 dot=plot(ax2,0,0,'ro','MarkerFaceColor','r');
 xlabel(ax2,'Cam angle (deg)');ylabel(ax2,'Follower lift (mm)');
-xlim(ax2,[0 360]);ylim(ax2,[-2 model.h+2]);title(ax2,'Symbolic displacement');
-title(ax,label); drawnow;
+xlim(ax2,[0 360]);ylim(ax2,[-2 model.h+2]);
+yticks(ax2,unique([0;model.schedule(:,3);model.schedule(:,4)]));title(ax2,'Follower displacement');
+title(ax,sprintf('%s | Rb = %.1f mm',label,model.rb)); drawnow;
 print(fig,fullfile(outDir,'Render.png'),'-dpng','-r150');
 if ~animate, return; end
 writer=VideoWriter(fullfile(outDir,'Mechanism.avi'),'Motion JPEG AVI');
@@ -42,7 +43,7 @@ try
         local=model.geometry(a);
         set(contact,'XData',c*local.x+s*local.y,'YData',-s*local.x+c*local.y);
         set(dot,'XData',a*180/pi,'YData',lift(1));
-        title(ax,sprintf('%s | %.1f deg | s = %.2f mm',label,a*180/pi,lift(1)));
+        title(ax,{label,sprintf('Rb %.1f mm | angle %.1f deg | lift %.2f mm',model.rb,a*180/pi,lift(1))});
         drawnow; writeVideo(writer,getframe(fig)); pause(1/writer.FrameRate);
     end
     close(writer);
