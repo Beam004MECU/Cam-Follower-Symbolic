@@ -24,3 +24,5 @@ Reproduce using Python with NumPy, SciPy and Matplotlib: `python experiments/che
 ## Interactive playback check (pending MATLAB run)
 
 After RUN_ALL completes, press Play in each figure, Pause and Resume without a jump, Reset to angle zero, and close each figure. Confirm the other figure remains usable and no timer errors appear. AVI recording remains finite (three cycles each); playback controls do not modify saved video or numerical results.
+
+Playback speed revision: verify 0.1x, 0.25x (default), 0.5x, 1x and 2x while playing and paused; changing speed should preserve the displayed angle. Playback speed affects wall-clock display only, not the mechanism design or saved AVI. This UI revision awaits MATLAB validation.
