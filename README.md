@@ -2,7 +2,7 @@
 
 **ผู้จัดทำ:** นายภูริณัฐ ไชยขาว (Phurinat Chaikaow) · Mechanical Engineering, Chulalongkorn University  
 **เทคนิค:** Symbolic Mathematics · **ปรับปรุง:** 2026-10-19  
-**สถานะ:** เตรียมโค้ดและตรวจคำนวณอิสระแล้ว ยังรอทดสอบใน MATLAB จริง
+**สถานะ:** ทดสอบผ่านใน MATLAB R2026a Update 4 พร้อม Symbolic Math Toolbox ทั้งสองกรณี (19 ตุลาคม 2026)
 
 **วิธีรัน:** MATLAB พร้อม Symbolic Math Toolbox → เปิด `RUN_ALL.m` แล้วกด Run บันทึก AVI งานละ 3 รอบอัตโนมัติ เมื่อจบแล้วกด **Play / Pause** เพื่อดูต่อเนื่อง หรือ **Reset** เพื่อกลับมุมเริ่มต้น ปรับ **Playback speed** ได้ตั้งแต่ 0.1× ถึง 2× (เริ่มที่ 0.25×) โดยไม่เปลี่ยนความเร็ว 60 rpm ที่ใช้คำนวณและบันทึก AVI
 
@@ -29,6 +29,10 @@ F(u)=u-\frac{\sin(2\pi u)}{2\pi},\quad s=hF(u),\quad v=\omega\frac{ds}{d\theta},
 
 **DOF:** แบบเต็มมี $n=4$, $j_1=3$, $j_2=1$ จึงได้ $M=3(n-1)-2j_1-j_2=2$ โดยหนึ่งตัวแปรเป็นการหมุนอิสระของลูกกลิ้ง ซึ่งไม่เปลี่ยนระยะยก เมื่อละตัวแปร passive นี้ แบบจำลองอินพุต–เอาต์พุตมี **DOF = 1** กำหนดมุมแคมแล้วหาระยะยกได้ ภาพเคลื่อนไหวไม่กำหนดการหมุนรอบตัวเองของลูกกลิ้ง และไม่ได้อ้างว่ากลิ้งไม่ไถล
 
+![MATLAB symbolic analysis](media/main_matlab.png)
+
+[ภาพเคลื่อนไหวจาก MATLAB (AVI)](media/main_mechanism.avi)
+
 ช่วงทำงานของศูนย์ลูกกลิ้งในงานหลัก: $x=0$, $45\le y\le65$ mm
 
 ## Synthesis
@@ -50,9 +54,11 @@ F(u)=u-\frac{\sin(2\pi u)}{2\pi},\quad s=hF(u),\quad v=\omega\frac{ds}{d\theta},
 R_b \ge \max_\theta\left(\frac{|s_\theta|}{\tan30^\circ}-R_r-s\right).
 ```
 
-ผลคำนวณอิสระให้รัศมีฐานขั้นต่ำจากมุมกด 33.385 mm เลือก **33.5 mm** มุมกดสูงสุดประมาณ **29.941°** ช่วงค้างและช่วงยกต่อกันด้วยความเร็วและความเร่งเป็นศูนย์ที่รอยต่อ
+ผลจาก MATLAB สอดคล้องกับการคำนวณอิสระ ให้รัศมีฐานขั้นต่ำจากมุมกด 33.385 mm เลือก **33.5 mm** มุมกดสูงสุดประมาณ **29.941°** ช่วงค้างและช่วงยกต่อกันด้วยความเร็วและความเร่งเป็นศูนย์ที่รอยต่อ
 
-![Stepped synthesis](media/stepped_synthesis.png)
+![MATLAB stepped synthesis](media/bonus_matlab.png)
+
+[ภาพเคลื่อนไหวจาก MATLAB (AVI)](media/bonus_mechanism.avi) · [ผลตรวจ](experiments/README.md)
 
 **สมมติฐาน:** ชิ้นส่วนแข็งเกร็ง คงสัมผัส และแคมหมุนด้วยความเร็วคงที่ เป็นการวิเคราะห์เชิงจลนศาสตร์ รายละเอียดสมการอยู่ใน [design.md](docs/design.md)
 

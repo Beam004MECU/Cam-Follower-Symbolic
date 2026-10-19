@@ -6,6 +6,6 @@
 - `validate_cam.m`: assertions and numerical geometric checks.
 - `render_cam.m`: visible mechanism, displacement plot, PNG and AVI.
 
-Run `RUN_ALL.m` in the repository root for both tasks and a diagnostic ZIP. Requires MATLAB with Symbolic Math Toolbox. Uses only MATLAB base routines besides symbolic operations; no Optimization Toolbox or Simscape required. Actual version compatibility awaits the first MATLAB run. Parameters are in the two entry functions; the synthesis uses a 30-degree pressure limit and the six-stage schedule listed in the root README.
+Run `RUN_ALL.m` in the repository root for both tasks and a diagnostic ZIP. Requires MATLAB with Symbolic Math Toolbox. Uses only MATLAB base routines besides symbolic operations; no Optimization Toolbox or Simscape required. Verified in MATLAB R2026a Update 4 with Symbolic Math Toolbox 26.1 on 19 October 2026; other versions have not been tested. Parameters are in the two entry functions; the synthesis uses a 30-degree pressure limit and the six-stage schedule listed in the root README.
 
 `install_cam_controls.m` adds nonblocking Play/Pause and Reset after recording. RUN_ALL enables controls only after both cases and the result ZIP are complete. Closing a figure stops and deletes only its own timer. Interactive playback does not append to the AVI.

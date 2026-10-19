@@ -1,6 +1,10 @@
 # Verification status
 
-**MATLAB runtime status: NOT YET EXECUTED.** No claim is made that MATLAB has passed. `RUN_ALL.m` collects actual MATLAB version, logs, results and AVI files into a timestamped ZIP. Send that ZIP even if an error occurs. Each run uses a new result directory so old successes cannot mask a failed run.
+Both cases passed the assertions in an actual MATLAB run on 19 October 2026, using MATLAB R2026a Update 4 and Symbolic Math Toolbox 26.1 on macOS. `RUN_COMPLETE.txt` reports: "Both tasks completed with all assertions passing." No error report was produced.
+
+The returned MAT results agree with the independent reference for base radius, maximum pressure angle and minimum convex pitch radius to within 1e-8 in the reported units. Both returned AVI files contain 90 frames at 30 fps (3 seconds, three revolutions). Sample frames at 60, 180 and 300 degrees were reviewed for the mechanism and displacement marker. The user also confirmed interactive playback and speed controls operate; every UI state was not independently instrumented.
+
+Raw runtime logs are excluded because they contain machine and license information. The numerical result files and completion marker are included under `matlab_results/`; videos and rendered images are under `media/`.
 
 Independent NumPy/SciPy calculation (`check_reference.py`) checks the main case and the revised stepped synthesis:
 
@@ -14,15 +18,3 @@ The independent check confirms both dwell levels, the return and the derivative 
 
 Reproduce using Python with NumPy, SciPy and Matplotlib: `python experiments/check_reference.py`. It generates `reference_results.json` and `media/stepped_synthesis.png`. The main links/joints illustration remains the unchanged main design.
 
-## Pending MATLAB checks
-
-1. Run `RUN_ALL.m` with Symbolic Math Toolbox; record actual MATLAB version.
-2. Confirm both animation windows display correctly and both AVI files play.
-3. Inspect `RUN_COMPLETE.txt` or `ERROR_REPORT.txt`, compare MAT results with the table above.
-4. Only after reviewing the actual results change the project status to validated in MATLAB.
-
-## Interactive playback check (pending MATLAB run)
-
-After RUN_ALL completes, press Play in each figure, Pause and Resume without a jump, Reset to angle zero, and close each figure. Confirm the other figure remains usable and no timer errors appear. AVI recording remains finite (three cycles each); playback controls do not modify saved video or numerical results.
-
-Playback speed revision: verify 0.1x, 0.25x (default), 0.5x, 1x and 2x while playing and paused; changing speed should preserve the displayed angle. Playback speed affects wall-clock display only, not the mechanism design or saved AVI. This UI revision awaits MATLAB validation.

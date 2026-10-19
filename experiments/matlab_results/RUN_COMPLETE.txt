@@ -1,0 +1,1 @@
+Both tasks completed with all assertions passing.
