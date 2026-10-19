@@ -34,10 +34,13 @@ end
 function Y=motion(theta,schedule,fun)
 % Rows: s, ds/dtheta, d2s/dtheta2, d3s/dtheta3. Joins use right limits.
 th=mod(theta(:)',2*pi); Y=zeros(4,numel(th));
+edges=[schedule(:,1);schedule(end,2)]*pi/180;
+covered=false(size(th));
 for k=1:size(schedule,1)
-    start=schedule(k,1)*pi/180; beta=(schedule(k,2)-schedule(k,1))*pi/180;
+    start=edges(k); stop=edges(k+1); beta=stop-start;
     delta=schedule(k,4)-schedule(k,3);
-    idx=th>=start & th<start+beta; u=(th(idx)-start)/beta;
+    idx=th>=start & th<stop; covered=covered | idx;
+    u=(th(idx)-start)/beta;
     Y(1,idx)=schedule(k,3);
     if delta~=0
         for d=0:3
@@ -45,6 +48,7 @@ for k=1:size(schedule,1)
         end
     end
 end
+assert(all(covered),'A cam angle was not assigned to a motion stage.');
 end
 
 function G=geometry(theta,rb,rr,schedule,fun)
