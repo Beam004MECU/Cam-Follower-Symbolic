@@ -1,9 +1,49 @@
 # Cam and Follower — Symbolic Analysis and Synthesis
 
-**ผู้จัดทำ:** นายภูริณัฐ ไชยขาว (Phurinat Chaikaow) · Mechanical Engineering, Chulalongkorn University  
-**เทคนิค:** Symbolic Mathematics
+โครงงานวิเคราะห์และสังเคราะห์กลไกแคม–ตัวตามด้วย Symbolic Mathematics จัดตาม [Mechanical Engineering Project Template](https://github.com/cratchat/mechanical-engineering-project-template)
+
+## Getting started
+
+1. ดาวน์โหลดหรือ clone repository นี้ แล้วเปิดโฟลเดอร์ใน MATLAB พร้อม Symbolic Math Toolbox
+2. เปิด `RUN_ALL.m` แล้วกด Run ตามวิธีรันด้านล่าง
+3. อ่านคำอธิบายในแต่ละโฟลเดอร์; ส่วนที่ไม่ใช้กับงาน symbolic ระบุไว้ว่า Not applicable
+4. ติดตามงานใน [GitHub Issues](https://github.com/Beam004MECU/Cam-Follower-Symbolic/issues) และอ่านการตัดสินใจออกแบบใน [docs/design.md](docs/design.md) กับผลตรวจใน [experiments/README.md](experiments/README.md)
+5. ตรวจ [LICENSE](LICENSE) ก่อนนำงานไปใช้ต่อหรือเผยแพร่ซ้ำ
+
+## Project overview
+
+- **Project name:** Cam and Follower — Symbolic Analysis and Synthesis
+- **Problem / purpose:** วิเคราะห์ระยะยก ความเร็ว ความเร่ง และผิวแคมด้วย symbolic พร้อมสังเคราะห์แคมยกสองระดับจากข้อจำกัดมุมกดและตรวจสอบเรขาคณิต
+- **Team:** นายภูริณัฐ ไชยขาว (Phurinat Chaikaow) — ผู้จัดทำโครงงาน การวิเคราะห์ การจำลอง และเอกสาร · Mechanical Engineering, Chulalongkorn University
+- **Status:** จำลองและบันทึกผลแล้ว อยู่ระหว่างตรวจทานก่อนส่ง
+- **Last updated:** 2026-10-19
+- **Technique:** Symbolic Mathematics
 
 **วิธีรัน:** MATLAB พร้อม Symbolic Math Toolbox → เปิด `RUN_ALL.m` แล้วกด Run บันทึก AVI งานละ 3 รอบอัตโนมัติ เมื่อจบแล้วกด **Play / Pause** เพื่อดูต่อเนื่อง หรือ **Reset** เพื่อกลับมุมเริ่มต้น ปรับ **Playback speed** ได้ตั้งแต่ 0.1× ถึง 2× (เริ่มที่ 0.25×) โดยไม่เปลี่ยนความเร็ว 60 rpm ที่ใช้คำนวณและบันทึก AVI
+
+## Repository structure
+
+| Path | Purpose |
+|---|---|
+| [hardware/mechanical/](hardware/mechanical/) | CAD แบบผลิตและประกอบ: Not applicable สำหรับงานนี้; แบบจำลองอยู่ใน simulation |
+| [hardware/electronics/](hardware/electronics/) | วงจร PCB และสายไฟ: Not applicable |
+| [hardware/bom.csv](hardware/bom.csv) | คงหัวตาราง BOM ตามเทมเพลต; ไม่มีรายการจัดซื้อฮาร์ดแวร์ |
+| [software/firmware/](software/firmware/) | ไมโครคอนโทรลเลอร์: Not applicable |
+| [software/application/](software/application/) | สภาพแวดล้อม MATLAB การติดตั้งและวิธีรัน |
+| [machine-skills/](machine-skills/) | คำสั่งเครื่องจักร: Not applicable |
+| [simulation/](simulation/) | โค้ด symbolic แบบจำลอง และการสร้างภาพเคลื่อนไหว |
+| [docs/](docs/) | การติดตั้ง ใช้งาน แก้ปัญหา และหลักการออกแบบ |
+| [media/](media/) | ภาพกลไก กราฟ และวิดีโอสาธิต |
+| [experiments/](experiments/) | วิธีตรวจสอบ ผล MATLAB และผลคำนวณอิสระ |
+| [publications/](publications/) | สถานะสิ่งพิมพ์และแหล่งอ้างอิง |
+
+## Collaboration and file practices
+
+ใช้ชื่อไฟล์และ commit ที่อธิบายการเปลี่ยนแปลง เก็บ source ที่แก้ไขได้ และบันทึกงานใน Issues หน่วยคำนวณคือ mm, s และ rad; ใช้องศาสำหรับแสดงผล รุ่นซอฟต์แวร์และเงื่อนไขอยู่ใน [simulation/README.md](simulation/README.md) ไม่เก็บข้อมูลลับ ไฟล์ชั่วคราว หรือผลส่งออกซ้ำโดยไม่จำเป็น; พิจารณา Git LFS เมื่อมีไฟล์ขนาดใหญ่
+
+## Safety and validation
+
+งานนี้เป็นการจำลองจลนศาสตร์ ไม่มีการทดสอบฮาร์ดแวร์ สมมติชิ้นส่วนแข็งเกร็งและคงสัมผัส ไม่ได้ตรวจแรง ความแข็งแรง หรือการหลุดสัมผัส จึงยังใช้ผลนี้รับรองการผลิตหรือความปลอดภัยของเครื่องจริงไม่ได้ ตรวจผลด้วย assertions ใน MATLAB และการคำนวณอิสระตาม [experiments/README.md](experiments/README.md); ยังไม่มีผลวัดจากชิ้นงานจริง
 
 ## Symbolic Analysis
 
