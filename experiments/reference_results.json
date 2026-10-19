@@ -1,0 +1,40 @@
+{
+  "status": "Independent Python reference; MATLAB not yet run",
+  "main": {
+    "h": 20,
+    "rb": 40,
+    "max_pressure_deg": 25.142614709795208,
+    "min_pitch_radius": 35.46756045771277,
+    "min_gap": -1.7763568394002505e-14,
+    "max_contact_error": 1.4210854715202004e-14,
+    "derivative_residuals": [
+      3.3616025518767856e-09,
+      1.4720143326485413e-08
+    ]
+  },
+  "bonus_continuous": {
+    "h": 30,
+    "rb": 47.52833590090475,
+    "max_pressure_deg": 29.999998653627138,
+    "min_pitch_radius": 41.82329460260653,
+    "min_gap": -1.3322676295501878e-14,
+    "max_contact_error": 2.842170943040401e-14,
+    "derivative_residuals": [
+      5.042402051458339e-09,
+      2.2035806068743113e-08
+    ]
+  },
+  "bonus": {
+    "h": 30,
+    "rb": 48.0,
+    "max_pressure_deg": 29.820448032998904,
+    "min_pitch_radius": 42.17089754651569,
+    "min_gap": -1.509903313490213e-14,
+    "max_contact_error": 2.842170943040401e-14,
+    "derivative_residuals": [
+      5.042402051458339e-09,
+      2.2035806068743113e-08
+    ]
+  },
+  "critical_u": 0.45437105165701
+}

@@ -1,3 +1,3 @@
 # Mechanical hardware
 
-Store native CAD files, drawings, assembly references, and fabrication files here. Use clear part names and revision identifiers. State the CAD software/version and any material, tolerance, or manufacturing notes needed by collaborators.
+This is a symbolic kinematics project. No CAD or fabrication files are claimed. The geometric model is in `../../simulation/`, with its labeled diagram in `../../media/links_joints.png`.

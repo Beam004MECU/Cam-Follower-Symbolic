@@ -1,24 +1,23 @@
-# Operating systems and editors
+simulation/results/
+simulation/tmp*/
+simulation/tp*/
+RETURN_TO_REVIEW_*.zip
+*.asv
+*.m~
+__pycache__/
+
 .DS_Store
 Thumbs.db
 *.swp
 *~
 .vscode/
 .idea/
-
-# Python
-__pycache__/
 *.py[cod]
 .venv/
 venv/
-
-# MATLAB / Simulink generated files
 slprj/
-*.asv
 *.autosave
 *.slxc
-
-# Temporary and backup files
 *.bak
 *.tmp
 *.lock

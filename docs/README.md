@@ -1,3 +1,3 @@
 # Documentation
 
-Add assembly, setup, operation, troubleshooting, and maintenance instructions. Include required tools, safety notes, revision history, and photographs or diagrams where useful.
+See the root README for operation, links, joints and DOF. See `design.md` for geometry and the synthesis bound. Use `RUN_ALL.m` for diagnostics; send the timestamped return ZIP even if MATLAB reports an error. Do not close an animation window while it is recording. No hardware setup is required.
