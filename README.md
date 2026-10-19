@@ -1,8 +1,7 @@
 # Cam and Follower — Symbolic Analysis and Synthesis
 
 **ผู้จัดทำ:** นายภูริณัฐ ไชยขาว (Phurinat Chaikaow) · Mechanical Engineering, Chulalongkorn University  
-**เทคนิค:** Symbolic Mathematics · **ปรับปรุง:** 2026-10-19  
-**สถานะ:** ทดสอบผ่านใน MATLAB R2026a Update 4 พร้อม Symbolic Math Toolbox ทั้งสองกรณี (19 ตุลาคม 2026)
+**เทคนิค:** Symbolic Mathematics
 
 **วิธีรัน:** MATLAB พร้อม Symbolic Math Toolbox → เปิด `RUN_ALL.m` แล้วกด Run บันทึก AVI งานละ 3 รอบอัตโนมัติ เมื่อจบแล้วกด **Play / Pause** เพื่อดูต่อเนื่อง หรือ **Reset** เพื่อกลับมุมเริ่มต้น ปรับ **Playback speed** ได้ตั้งแต่ 0.1× ถึง 2× (เริ่มที่ 0.25×) โดยไม่เปลี่ยนความเร็ว 60 rpm ที่ใช้คำนวณและบันทึก AVI
 
