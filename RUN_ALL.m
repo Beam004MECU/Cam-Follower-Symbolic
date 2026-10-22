@@ -9,7 +9,11 @@ if ~exist(resultRoot,'dir'), mkdir(resultRoot); end
 runFolder=tempname(resultRoot); mkdir(runFolder);
 diary(fullfile(runFolder,'MATLAB_log.txt'));
 try
-    fprintf('Run: %s\nMATLAB: %s\n',stamp,version);ver;
+    fprintf('Validation revision: 2\nRun: %s\nMATLAB: %s\n',stamp,version);ver;
+    % Preserve the exact source used for this run in the returned archive.
+    sourceFolder=fullfile(runFolder,'source');mkdir(sourceFolder);
+    copyfile(fullfile(root,'simulation','*.m'),sourceFolder);
+    copyfile(fullfile(root,'RUN_ALL.m'),sourceFolder);
     mainResult=run_main(fullfile(runFolder,'main'),true,true);
     bonusResult=run_bonus(fullfile(runFolder,'bonus'),true,true);
     save(fullfile(runFolder,'results.mat'),'mainResult','bonusResult');

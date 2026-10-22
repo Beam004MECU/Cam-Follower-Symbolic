@@ -18,7 +18,10 @@ for angle=linspace(0,2*pi,361)
 end
 assert(minGap>=-1e-6,'Sampled global roller interference.');
 % Independent central differences away from event boundaries.
-t=[0.3 0.8 1.2 3.4 3.9 4.4]; dt=1e-5;
+% Three interior points in EVERY stage, including all dwells and rises/fall.
+stages=model.schedule;
+t=reshape((stages(:,1)+(stages(:,2)-stages(:,1))*[0.2 0.5 0.8])'*pi/180,1,[]);
+dt=1e-5;
 Ya=model.motion(t); Yp=model.motion(t+dt); Ym=model.motion(t-dt);
 velocityResidual=max(abs((Yp(1,:)-Ym(1,:))/(2*dt)-Ya(2,:)));
 accelerationResidual=max(abs((Yp(2,:)-Ym(2,:))/(2*dt)-Ya(3,:)));
@@ -31,6 +34,26 @@ for side=[-1 0 1]
     assert(max(abs(check(1,:)-joinValues))<1e-7,'Discontinuous stage position.');
     assert(max(max(abs(check(2:3,:))))<1e-5,'Discontinuous stage velocity/acceleration.');
 end
+% Invert the actual polygonal surface; do not reuse the prescribed lift.
+angles=unique([linspace(0,2*pi,361) (0:136)*2*pi/137+0.00123 t joinAngles]);
+recovered=recover_lift(G.x,G.y,model.rr,model.rb,angles);
+expected=model.motion(angles);
+surfaceLiftResidual=max(abs(recovered-expected(1,:)));
+% A finite polygon approximates the smooth surface; tolerance is in mm.
+assert(surfaceLiftResidual<1e-4,'Surface does not reproduce prescribed lift.');
+% The displayed/recorded patch uses a coarser polygon; check it separately.
+renderG=model.geometry(linspace(0,2*pi,1801));
+renderLift=recover_lift(renderG.x,renderG.y,model.rr,model.rb,angles);
+renderResidual=max(abs(renderLift-expected(1,:)));
+assert(renderResidual<1e-3,'Rendered surface does not reproduce prescribed lift.');
+result.renderSurfaceLiftResidual=renderResidual;
+result.surfaceLiftResidual=surfaceLiftResidual;
+result.validationVersion=2;
+% Save the evaluated model so an independent checker can inspect MATLAB output.
+result.samples.theta=th;
+result.samples.motion=Y;
+result.samples.cam=[G.x;G.y];
+result.samples.schedule=model.schedule;
 result.h=model.h; result.rb=model.rb; result.rr=model.rr;
 result.maxPressureDeg=max(abs(G.phi)); result.minPitchRadius=rhoMin;
 result.minCamRadius=rhoMin-model.rr; result.minSampledGap=minGap;

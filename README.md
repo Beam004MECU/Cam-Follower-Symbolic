@@ -15,11 +15,13 @@
 - **Project name:** Cam and Follower — Symbolic Analysis and Synthesis
 - **Problem / purpose:** วิเคราะห์ระยะยก ความเร็ว ความเร่ง และผิวแคมด้วย symbolic พร้อมสังเคราะห์แคมยกสองระดับจากข้อจำกัดมุมกดและตรวจสอบเรขาคณิต
 - **Team:** นายภูริณัฐ ไชยขาว (Phurinat Chaikaow) — ผู้จัดทำโครงงาน การวิเคราะห์ การจำลอง และเอกสาร · Mechanical Engineering, Chulalongkorn University
-- **Status:** จำลองและบันทึกผลแล้ว อยู่ระหว่างตรวจทานก่อนส่ง
-- **Last updated:** 2026-10-19
+- **Status:** แก้โค้ดรอบตรวจละเอียดแล้ว; ผลตรวจอิสระผ่าน รอยืนยัน MATLAB รุ่นแก้ (validation revision 2)
+- **Last updated:** 2026-10-23
 - **Technique:** Symbolic Mathematics
 
 **วิธีรัน:** MATLAB พร้อม Symbolic Math Toolbox → เปิด `RUN_ALL.m` แล้วกด Run บันทึก AVI งานละ 3 รอบอัตโนมัติ เมื่อจบแล้วกด **Play / Pause** เพื่อดูต่อเนื่อง หรือ **Reset** เพื่อกลับมุมเริ่มต้น ปรับ **Playback speed** ได้ตั้งแต่ 0.1× ถึง 2× (เริ่มที่ 0.25×) โดยไม่เปลี่ยนความเร็ว 60 rpm ที่ใช้คำนวณและบันทึก AVI
+
+รุ่นแก้แสดงกราฟระยะยก ความเร็ว และความเร่ง พร้อมกลไกในหน้าต่างเดียวกัน ผลและสื่อจาก MATLAB ที่เก็บใน repository เป็นของรุ่นก่อนแก้ ให้รัน `RUN_ALL.m` ใหม่ แล้วใช้ ZIP ที่สร้างขึ้นยืนยันรุ่นนี้ รายละเอียดอยู่ใน [ผลตรวจ](experiments/README.md)
 
 ## Repository structure
 
@@ -68,6 +70,8 @@ F(u)=u-\frac{\sin(2\pi u)}{2\pi},\quad s=hF(u),\quad v=\omega\frac{ds}{d\theta},
 
 **DOF:** แบบเต็มมี $n=4$, $j_1=3$, $j_2=1$ จึงได้ $M=3(n-1)-2j_1-j_2=2$ โดยหนึ่งตัวแปรเป็นการหมุนอิสระของลูกกลิ้ง ซึ่งไม่เปลี่ยนระยะยก เมื่อละตัวแปร passive นี้ แบบจำลองอินพุต–เอาต์พุตมี **DOF = 1** กำหนดมุมแคมแล้วหาระยะยกได้ ภาพเคลื่อนไหวไม่กำหนดการหมุนรอบตัวเองของลูกกลิ้ง และไม่ได้อ้างว่ากลิ้งไม่ไถล
 
+*ภาพและวิดีโอต่อไปนี้เป็นผล MATLAB รุ่นก่อนแก้ ไม่ใช่หลักฐานการรัน revision 2*
+
 ![MATLAB symbolic analysis](media/main_matlab.png)
 
 [ภาพเคลื่อนไหวจาก MATLAB (AVI)](media/main_mechanism.avi)
@@ -94,6 +98,8 @@ R_b \ge \max_\theta\left(\frac{|s_\theta|}{\tan30^\circ}-R_r-s\right).
 ```
 
 ผลจาก MATLAB สอดคล้องกับการคำนวณอิสระ ให้รัศมีฐานขั้นต่ำจากมุมกด 33.385 mm เลือก **33.5 mm** มุมกดสูงสุดประมาณ **29.941°** ช่วงค้างและช่วงยกต่อกันด้วยความเร็วและความเร่งเป็นศูนย์ที่รอยต่อ
+
+*ภาพและวิดีโอนี้เป็นผล MATLAB รุ่นก่อนแก้*
 
 ![MATLAB stepped synthesis](media/bonus_matlab.png)
 

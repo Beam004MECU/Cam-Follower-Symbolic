@@ -1,6 +1,9 @@
 {
-  "status": "Independent Python reference; stepped MATLAB revision not yet run",
+  "status": "Independent Python verification of revision 2; revised MATLAB execution pending",
   "main": {
+    "surface_lift_residual": 2.428232829032595e-06,
+    "render_surface_lift_residual": 0.00015335776243219357,
+    "negative_control_residual": 0.6000014135851188,
     "h": 20,
     "rb": 40,
     "max_pressure_deg": 25.142614709795208,
@@ -8,11 +11,14 @@
     "min_gap": -1.7763568394002505e-14,
     "max_contact_error": 1.4210854715202004e-14,
     "derivative_residuals": [
-      3.3616025518767856e-09,
-      1.4720143326485413e-08
+      3.5645264517825126e-09,
+      1.4691821093038016e-08
     ]
   },
   "bonus_continuous": {
+    "surface_lift_residual": 2.3594368627755102e-06,
+    "render_surface_lift_residual": 0.00015602653613200346,
+    "negative_control_residual": 0.583851865142968,
     "h": 25,
     "rb": 33.38504912665363,
     "max_pressure_deg": 29.999996506577308,
@@ -20,11 +26,14 @@
     "min_gap": -9.769962616701378e-15,
     "max_contact_error": 1.509903313490213e-14,
     "derivative_residuals": [
-      2.9783197019739305e-09,
-      3.4704207507729734e-08
+      5.804221103744567e-09,
+      3.319273389479349e-08
     ]
   },
   "bonus": {
+    "surface_lift_residual": 2.3620230322762836e-06,
+    "render_surface_lift_residual": 0.0001562162439796566,
+    "negative_control_residual": 0.5850013765816442,
     "h": 25,
     "rb": 33.5,
     "max_pressure_deg": 29.94115467676437,
@@ -32,8 +41,8 @@
     "min_gap": -1.0658141036401503e-14,
     "max_contact_error": 1.509903313490213e-14,
     "derivative_residuals": [
-      2.9783197019739305e-09,
-      3.4704207507729734e-08
+      5.804221103744567e-09,
+      3.319273389479349e-08
     ]
   },
   "critical_u": [
@@ -45,5 +54,52 @@
     23.385087422232793,
     15.323959665503013,
     33.38504912665363
-  ]
+  ],
+  "pressure_limit_regression": {
+    "25": {
+      "surface_lift_residual": 2.6422136443216004e-06,
+      "render_surface_lift_residual": 0.00017482637031918102,
+      "negative_control_residual": 0.7000016472181727,
+      "h": 25,
+      "rb": 45.0,
+      "max_pressure_deg": 24.98571795050589,
+      "min_pitch_radius": 30.37208391486138,
+      "min_gap": -1.5987211554602254e-14,
+      "max_contact_error": 2.6645352591003757e-14,
+      "derivative_residuals": [
+        5.804221103744567e-09,
+        3.319273389479349e-08
+      ]
+    },
+    "30": {
+      "surface_lift_residual": 2.3620230322762836e-06,
+      "render_surface_lift_residual": 0.0001562162439796566,
+      "negative_control_residual": 0.5850013765816442,
+      "h": 25,
+      "rb": 33.5,
+      "max_pressure_deg": 29.94115467676437,
+      "min_pitch_radius": 22.103412883003006,
+      "min_gap": -1.0658141036401503e-14,
+      "max_contact_error": 1.509903313490213e-14,
+      "derivative_residuals": [
+        5.804221103744567e-09,
+        3.319273389479349e-08
+      ]
+    },
+    "35": {
+      "surface_lift_residual": 2.170685746705203e-06,
+      "render_surface_lift_residual": 0.0001418970603808134,
+      "negative_control_residual": 0.5000011765459575,
+      "h": 25,
+      "rb": 25.0,
+      "max_pressure_deg": 34.96052780304123,
+      "min_pitch_radius": 16.492322452773873,
+      "min_gap": -1.3322676295501878e-14,
+      "max_contact_error": 1.4210854715202004e-14,
+      "derivative_residuals": [
+        5.804221103744567e-09,
+        3.319273389479349e-08
+      ]
+    }
+  }
 }

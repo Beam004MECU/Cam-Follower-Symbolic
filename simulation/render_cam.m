@@ -4,7 +4,7 @@ if nargin<6, deferPlayback=false; end
 % No prescribed roller spin: passive rotation is omitted in the reduced model.
 th=linspace(0,2*pi,1801); G=model.geometry(th);
 omega=2*pi*rpm/60; maxR=model.rb+model.h; guide=model.rb+2*model.rr+model.h+12;
-fig=figure('Name',label,'Color','w','Position',[80 80 1050 650]);
+fig=figure('Name',label,'Color','w','Position',[80 80 1150 780]);
 ax=subplot(1,2,1,'Parent',fig); hold(ax,'on'); axis(ax,'equal'); grid(ax,'on');
 axis(ax,[-maxR-15 maxR+25 -maxR-12 guide+model.h+25]);
 xlabel(ax,'x (mm)'); ylabel(ax,'y (mm)');
@@ -21,12 +21,21 @@ pin=plot(ax,0,y0,'ko','MarkerFaceColor','k');
 stem=plot(ax,[0 0],[y0 guide+18],'k-','LineWidth',3);
 uistack(stem,'bottom');
 contact=plot(ax,0,model.rb,'ro','MarkerFaceColor','r');
-ax2=subplot(1,2,2,'Parent',fig); hold(ax2,'on'); grid(ax2,'on');
-Y=model.motion(th); plot(ax2,th*180/pi,Y(1,:),'Color',[.1 .4 .6],'LineWidth',1.5);
-dot=plot(ax2,0,0,'ro','MarkerFaceColor','r');
-xlabel(ax2,'Cam angle (deg)');ylabel(ax2,'Follower lift (mm)');
-xlim(ax2,[0 360]);ylim(ax2,[-2 model.h+2]);
-yticks(ax2,unique([0;model.schedule(:,3);model.schedule(:,4)]));title(ax2,'Follower displacement');
+% Keep the mechanism and all three physical kinematic plots in one figure.
+Y=model.motion(th); values=[Y(1,:);omega*Y(2,:);omega^2*Y(3,:)];
+yLabels={'Lift (mm)','Velocity (mm/s)','Acceleration (mm/s^2)'};
+plotTitles={'Follower displacement','Follower velocity','Follower acceleration'};
+dots=gobjects(3,1);
+for k=1:3
+    kinAx=subplot(3,2,2*k,'Parent',fig); hold(kinAx,'on'); grid(kinAx,'on');
+    plot(kinAx,th*180/pi,values(k,:),'Color',[.1 .4 .6],'LineWidth',1.5);
+    dots(k)=plot(kinAx,0,values(k,1),'ro','MarkerFaceColor','r');
+    xlabel(kinAx,'Cam angle (deg)'); ylabel(kinAx,yLabels{k});
+    xlim(kinAx,[0 360]); title(kinAx,plotTitles{k});
+    % Reserve room for playback controls below the bottom axes.
+    pos=get(kinAx,'Position');pos(2)=pos(2)+.04;pos(4)=pos(4)-.025;
+    set(kinAx,'Position',pos);
+end
 title(ax,sprintf('%s | Rb = %.1f mm',label,model.rb)); drawnow;
 print(fig,fullfile(outDir,'Render.png'),'-dpng','-r150');
 if ~animate
@@ -56,7 +65,8 @@ install_cam_controls(fig,@updateFrame,omega,a,~deferPlayback);
         set(pin,'YData',center);set(stem,'YData',[center guide+18+lift(1)]);
         local=model.geometry(a);
         set(contact,'XData',c*local.x+s*local.y,'YData',-s*local.x+c*local.y);
-        set(dot,'XData',a*180/pi,'YData',lift(1));
+        current=[lift(1);omega*lift(2);omega^2*lift(3)];
+        for k=1:3, set(dots(k),'XData',a*180/pi,'YData',current(k)); end
         title(ax,{label,sprintf('Rb %.1f mm | angle %.1f deg | lift %.2f mm',model.rb,a*180/pi,lift(1))});
     end
 end
