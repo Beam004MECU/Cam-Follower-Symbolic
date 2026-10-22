@@ -2,6 +2,17 @@
 
 โครงงานวิเคราะห์และสังเคราะห์กลไกแคม–ตัวตามด้วย Symbolic Mathematics จัดตาม [Mechanical Engineering Project Template](https://github.com/cratchat/mechanical-engineering-project-template)
 
+## โค้ดหลักของโครงงาน
+
+| ส่วนงาน | เปิดดูโค้ด | หน้าที่ |
+|---|---|---|
+| Symbolic model | [cam_model.m](simulation/cam_model.m) | สร้างสมการการเคลื่อนที่ด้วย Symbolic และคำนวณผิวแคม |
+| งานหลัก | [run_main.m](simulation/run_main.m) | วิเคราะห์กลไกตามขนาดที่กำหนดและแสดงภาพเคลื่อนไหว |
+| Synthesis โบนัส | [run_bonus.m](simulation/run_bonus.m) | สังเคราะห์แคมยกสองระดับและหารัศมีฐานจากข้อจำกัดมุมกด |
+| รันทั้งสองงาน | [RUN_ALL.m](RUN_ALL.m) | เรียกงานหลักและ Synthesis ตามลำดับ |
+
+[รูป links–joints และการวิเคราะห์ DOF](#symbolic-analysis) · [โค้ดสร้างภาพเคลื่อนไหว](simulation/render_cam.m) · [โค้ดตรวจสอบผล](simulation/validate_cam.m)
+
 ## Getting started
 
 1. ดาวน์โหลดหรือ clone repository นี้ แล้วเปิดโฟลเดอร์ใน MATLAB พร้อม Symbolic Math Toolbox
