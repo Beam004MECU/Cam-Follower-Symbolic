@@ -1,5 +1,5 @@
 {
-  "status": "Independent Python verification of revision 2; revised MATLAB execution pending",
+  "status": "Revision 2 MATLAB sampled motion and surfaces match the independent reference",
   "main": {
     "surface_lift_residual": 2.428232829032595e-06,
     "render_surface_lift_residual": 0.00015335776243219357,

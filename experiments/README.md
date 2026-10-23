@@ -1,50 +1,38 @@
 # Experiments
 
-## Test record
+Revision 2 passed an actual MATLAB run and independent comparison on **23 October 2026** for both Main and Synthesis.
 
-- **Objective:** Verify symbolic kinematics, stepped-lift synthesis, geometry and recorded animation.
-- **Date / operator:** 2026-10-19 / Phurinat Chaikaow.
-- **Setup / equipment:** MATLAB R2026a Update 4 with Symbolic Math Toolbox 26.1 on macOS; numerical simulation only.
-- **Calibration:** Not applicable; no physical measuring instruments or measurements.
-- **Conditions / units:** Constant 60 rpm; prescribed motion schedules in the root README; mm, s and rad internally, degrees for reported angles.
-- **Procedure:** Run `RUN_ALL.m` from the repository root, inspect assertions and generated results, then compare against `check_reference.py` as described below.
-- **Data:** `matlab_results/` contains saved numerical results and the completion marker, not physical raw measurements; `reference_results.json` contains processed independent-check results.
+## Runtime evidence
 
-## Previous MATLAB run (19 October 2026)
+- Executed in MATLAB with Symbolic Math Toolbox; machine and license details are excluded.
+- Accepted run: `RETURN_TO_REVIEW_20261023_221455.zip`; the earlier `221141` run also passed with identical numerical results.
+- Both runs contain `validationVersion=2`, source snapshots, sampled motion/profile arrays and `RUN_COMPLETE.txt`; neither contains `ERROR_REPORT.txt`.
+- All eight source files match the repository MATLAB source byte-for-byte. Source, archive and evidence hashes are recorded in [verification.json](matlab_results/verification.json).
+- Saved MAT files and the completion marker are in `matlab_results/`; PNG exports and resized/recompressed AVI copies are in `../media/`. These replace the 19 October evidence. Raw logs are excluded because they contain machine/license information.
 
-Both cases in the previous source revision passed the assertions in an actual MATLAB run on 19 October 2026, using MATLAB R2026a Update 4 and Symbolic Math Toolbox 26.1 on macOS. `RUN_COMPLETE.txt` reports: "Both tasks completed with all assertions passing." No error report was produced.
-
-The returned MAT results agree with the independent reference for base radius, maximum pressure angle and minimum convex pitch radius to within 1e-8 in the reported units. Both returned AVI files contain 90 frames at 30 fps (3 seconds, three revolutions). Sample frames at 60, 180 and 300 degrees were reviewed for the mechanism and displacement marker. The user also confirmed interactive playback and speed controls operate; every UI state was not independently instrumented.
-
-Raw runtime logs are excluded because they contain machine and license information. The numerical result files and completion marker are included under `matlab_results/`; videos and rendered images are under `media/`.
-
-## Revision 2 checks (23 October 2026)
-
-The updated MATLAB source has **not yet been executed in MATLAB**. The saved MAT files, completion marker, PNGs and AVIs above belong to the previous revision; they do not certify the new checks or three-plot UI.
-
-Changes: use `phiLimit` in both symbolic synthesis expressions; check numerical derivatives at three interior points of every stage; reconstruct lift from all polygon edges independently of the motion law; export sampled motion and profile arrays plus a source snapshot. The renderer shows physical s, v and a using 60 rpm, with synchronized markers. Playback speed still only changes playback timing.
-
-Independent NumPy/SciPy calculation (`check_reference.py`) passes for the main case and stepped synthesis:
-
-| Case | Max lift mm | Rb mm | max abs pressure deg | min convex pitch radius mm |
+| Case | Max lift mm | Rb mm | Max abs pressure deg | Min convex pitch radius mm |
 |---|---:|---:|---:|---:|
 | Main | 20 | 40 | 25.142615 | 35.467560 |
-| Stepped synthesis continuous bound | 25 | 33.385049 | 29.999997 | 22.024396 |
-| Stepped synthesis selected | 25 | 33.5 | 29.941155 | 22.103413 |
+| Synthesis | 25 | 33.5 | 29.941155 | 22.103413 |
 
-The independent check confirms both dwell levels, the return and the derivative residuals (below 3.5e-8). The sampled interference gap is within floating-point roundoff of zero. Geometry uses 14401 profile points and 361 roller positions; this does not prove absence of interference at every possible point or validate forces.
+Synthesis gives a continuous pressure-angle bound of 33.385049127 mm, rounded upward in 0.5 mm steps to 33.5 mm. Its critical points and stage bounds agree with independent calculation. Both cases satisfy the 30° pressure limit and 7 mm convex pitch-radius threshold.
 
-Reproduce using Python with NumPy, SciPy and Matplotlib: `python experiments/check_reference.py`. It generates `reference_results.json` and `media/stepped_synthesis.png`. The main links/joints illustration remains the unchanged main design.
+## Independent comparison
 
-
-The independent surface inversion residual is 0.00000243 mm (main) and 0.00000237 mm (selected synthesis), including 137 off-grid angles. Scaling the surface to 99% while keeping the correct prescribed lift produces errors of 0.600 and 0.585 mm, confirming that the check rejects an incorrect surface. A square profile checks vertical/horizontal edges. Repeating synthesis with limits 25°, 30° and 35° selects Rb=45.0, 33.5 and 25.0 mm respectively; all pass the applicable sampled pressure and curvature checks. These are independent Python results, not MATLAB runtime results.
-
-The actual 1801-point polygon used in the animation is also inverted, with a separate 0.001 mm tolerance. MATLAB syntax/static analysis with MISS_HIT passes for all eight `.m` files; this is not a MATLAB execution. The optional MAT import checker was tested with synthetic valid/corrupted fixtures, not with new MATLAB output.
-
-To close verification, run `RUN_ALL.m` in MATLAB and inspect the new plots and playback. Return the generated `RETURN_TO_REVIEW_*.zip`; the result must include `validationVersion=2`, source files, and the new sampled arrays. After extracting that ZIP, independently compare its actual MATLAB arrays with:
+With Python, NumPy, SciPy and Matplotlib installed, run from the repository root:
 
 ```bash
-python experiments/check_reference.py --matlab-dir /path/to/extracted/run
+python experiments/check_reference.py --matlab-dir experiments/matlab_results
 ```
 
-Only a successful new MATLAB run and comparison can replace the historical MATLAB evidence and mark this revision as runtime-verified.
+For an extracted returned ZIP, pass its extraction directory instead. The checker supports both the returned `main/result.mat`, `bonus/result.mat` layout and the stored `main_result.mat`, `bonus_result.mat` layout.
+
+Both returned archives passed the checker: all four motion rows and both cam coordinates at 14,401 angles agree within 1e-8. Observed maximum differences are 1.14e-13 for motion derivatives and 2.14e-14 mm for cam coordinates. Independent inversion of the returned surface also passes the 1e-4 mm tolerance. MATLAB reports surface lift residuals of 2.43e-6 mm (Main) and 2.37e-6 mm (Synthesis); the actual 1,801-point display polygons pass their separate 0.001 mm tolerance. Aggregate and per-case MAT arrays agree.
+
+The independent suite also checks derivatives, joins, dwell levels, surface inversion with off-grid angles, deliberately corrupted surfaces, and pressure limits of 25°, 30° and 35°. Those alternate pressure-limit cases are Python tests, not additional MATLAB runs.
+
+All four original returned AVIs decode completely: 90 frames at 30 fps, three seconds and three revolutions. Frames at 60°, 180° and 300° from the accepted run were reviewed for mechanism contact and synchronized s/v/a markers. Saved PNGs precede recording and playback controls; controls appear afterward in the live figures. The two published AVI copies are resized to 1150 × 780 and recompressed as MPEG-4; both decode completely and retain all 90 frames, 30 fps and three-second duration. Not every interactive UI state was instrumented.
+
+## Scope
+
+This verifies the submitted revision's symbolic kinematics, sampled geometry, synthesis and recorded output. Geometry checks use 14,401 profile points and 361 roller positions; finite sampling is not a proof for every possible point. No physical measurements, forces, strength or loss-of-contact dynamics were tested. Independent Python/static checks alone do not establish MATLAB execution; the returned revision 2 runtime evidence above supplies that evidence here.

@@ -96,7 +96,7 @@ if __name__=='__main__':
         b,_,_=synthesis_bound(schedule,limit)
         limit_checks[str(limit)]=verify(25,np.ceil(b*2)/2,schedule,limit)
     assert limit_checks['25']['rb']>limit_checks['30']['rb']>limit_checks['35']['rb']
-    results={'status':'Independent Python verification of revision 2; revised MATLAB execution pending',
+    results={'status':'Independent Python verification of revision 2; no MATLAB files compared in this invocation',
         'main':verify(20,40),'bonus_continuous':verify(25,bound,schedule),
         'bonus':verify(25,rb,schedule),'critical_u':roots,'stage_bounds':bounds,
         'pressure_limit_regression':limit_checks}
@@ -109,7 +109,9 @@ if __name__=='__main__':
     if args.matlab_dir:
         from scipy.io import loadmat
         for case,h,radius,stages in [('main',20,40,None),('bonus',25,rb,schedule)]:
-            data=loadmat(args.matlab_dir/case/'result.mat',simplify_cells=True)['result']
+            mat_path=args.matlab_dir/case/'result.mat'
+            if not mat_path.exists():mat_path=args.matlab_dir/f'{case}_result.mat'
+            data=loadmat(mat_path,simplify_cells=True)['result']
             assert data['validationVersion']==2,'Expected revision 2 MATLAB output'
             sample=data['samples'];theta=np.asarray(sample['theta'])
             assert np.max(abs(sample['motion']-motion(theta,h,stages)))<1e-8
@@ -117,6 +119,7 @@ if __name__=='__main__':
             assert np.max(abs(sample['cam']-np.array([xx,yy])))<1e-8
             recovered=recover_lift(*sample['cam'],rr,radius,np.linspace(0,2*np.pi,361))
             assert np.max(abs(recovered-motion(np.linspace(0,2*np.pi,361),h,stages)[0]))<1e-4
+        results['status']='Revision 2 MATLAB sampled motion and surfaces match the independent reference'
         print('Returned MATLAB sampled motion and surfaces match the independent reference.')
     for deg,value in [(a,s0) for a,b,s0,s1 in schedule]:
         angle=np.deg2rad(deg)

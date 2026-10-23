@@ -1,0 +1,53 @@
+{
+  "validationVersion": 2,
+  "run": "20261023_221455",
+  "archive": "RETURN_TO_REVIEW_20261023_221455.zip",
+  "archive_sha256": "a3ccbd0b8b50f5b677a5cf0ffe12db29a5f5cc8886807cf5ff6646b562aeaca4",
+  "source_sha256": {
+    "RUN_ALL.m": "6f3a3c607ddba2be942a822e3e291fb43ebb4817656c27700da112bb4620b097",
+    "simulation/cam_model.m": "68df4769d9b6427cec9ac03ae821c84a20891242e42bf5254b06965039578fce",
+    "simulation/install_cam_controls.m": "302bee04eefdef1bf899c716ea8b80451948f8651e9de6914e285b4a5e7cab09",
+    "simulation/recover_lift.m": "cdead6f45edf9e1852497f8e7c1bc8c7c65bbb8dfe0439ba36eee33dfe532a16",
+    "simulation/render_cam.m": "d50d4ce77b7b429e49ae5b5e8b136dae30a17e1745c12aef5f9e67420b2a8454",
+    "simulation/run_bonus.m": "27f0f80bd046526ef71b38f928268d2f92e0ef51026034f40df331c216fbcfc7",
+    "simulation/run_main.m": "d1a9cf2e5cc728cc66402f2693cfe4d7d5895b73fdc25698ae57a8b9515fab47",
+    "simulation/validate_cam.m": "b3401b61aeda31f7bc5fb0f548da5b4d7fa4fd56103257a35e11719176969287"
+  },
+  "comparison": "check_reference.py --matlab-dir: passed for both returned archives",
+  "cases": {
+    "main": {
+      "h": 20,
+      "rb": 40,
+      "maxPressureDeg": 25.1426147097952,
+      "minPitchRadius": 35.46756045771277,
+      "surfaceLiftResidual": 2.428232829032595e-06,
+      "renderSurfaceLiftResidual": 0.00015335776243219357,
+      "velocityResidual": 3.4757086098125e-09,
+      "accelerationResidual": 1.4691821093038016e-08,
+      "motion_max_abs_error": 5.684341886080802e-14,
+      "cam_max_abs_error": 2.1316282072803006e-14
+    },
+    "bonus": {
+      "h": 25,
+      "rb": 33.5,
+      "maxPressureDeg": 29.94115467676437,
+      "minPitchRadius": 22.103412883003006,
+      "surfaceLiftResidual": 2.3620230251708563e-06,
+      "renderSurfaceLiftResidual": 0.0001562162439796566,
+      "velocityResidual": 5.7598121827595605e-09,
+      "accelerationResidual": 3.279306071135579e-08,
+      "motion_max_abs_error": 1.1368683772161603e-13,
+      "cam_max_abs_error": 1.4210854715202004e-14
+    }
+  },
+  "evidence_sha256": {
+    "experiments/matlab_results/main_result.mat": "f917207b846f805c060d667076e1538b28cbe55af68309e3c6470be4709809cc",
+    "experiments/matlab_results/bonus_result.mat": "a0a47e68c2b5f943425d5f3b71937bdd5c4325a92b2d17d9abe9e2b2f59752b5",
+    "experiments/matlab_results/RUN_COMPLETE.txt": "8b83df46e9116471bb7cfce6eb206a7748147e755f9610ba579eb88246b006e3",
+    "media/main_matlab.png": "f6645cf97985c2350f1c5c2b04d8c80565cc74b770ff3a14bc4c58eee6ffd10a",
+    "media/main_mechanism.avi": "b7c00a31d3ba40d571436031136d427827035eeb6350e71485d9dd9e43933461",
+    "media/bonus_matlab.png": "c859f552628b7deb2dd20717b39eee8317decf2748b226db79cbfb60213b2dc2",
+    "media/bonus_mechanism.avi": "0df4389abe712c939ac2c788667cde4f64051d90f666466600a7ab18ce3a899e"
+  },
+  "published_video_encoding": "MPEG-4 AVI, resized from 2300x1560 to 1150x780; 90 frames at 30 fps, 3 seconds"
+}
