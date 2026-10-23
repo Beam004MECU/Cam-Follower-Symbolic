@@ -1,68 +1,18 @@
 # Cam and Follower — Symbolic Analysis and Synthesis
 
-โครงงานวิเคราะห์และสังเคราะห์กลไกแคม–ตัวตามด้วย Symbolic Mathematics จัดตาม [Mechanical Engineering Project Template](https://github.com/cratchat/mechanical-engineering-project-template)
+นายภูริณัฐ ไชยขาว (Phurinat Chaikaow) · Mechanical Engineering, Chulalongkorn University
 
-## โค้ดหลักของโครงงาน
-
-| ส่วนงาน | เปิดดูโค้ด | หน้าที่ |
-|---|---|---|
-| Symbolic model | [cam_model.m](simulation/cam_model.m) | สร้างสมการการเคลื่อนที่ด้วย Symbolic และคำนวณผิวแคม |
-| งานหลัก | [run_main.m](simulation/run_main.m) | วิเคราะห์กลไกตามขนาดที่กำหนดและแสดงภาพเคลื่อนไหว |
-| Synthesis โบนัส | [run_bonus.m](simulation/run_bonus.m) | สังเคราะห์แคมยกสองระดับและหารัศมีฐานจากข้อจำกัดมุมกด |
-| รันทั้งสองงาน | [RUN_ALL.m](RUN_ALL.m) | เรียกงานหลักและ Synthesis ตามลำดับ |
-
-[รูป links–joints และการวิเคราะห์ DOF](#symbolic-analysis) · [โค้ดสร้างภาพเคลื่อนไหว](simulation/render_cam.m) · [โค้ดตรวจสอบผล](simulation/validate_cam.m)
-
-## Getting started
-
-1. ดาวน์โหลดหรือ clone repository นี้ แล้วเปิดโฟลเดอร์ใน MATLAB พร้อม Symbolic Math Toolbox
-2. เปิด `RUN_ALL.m` แล้วกด Run ตามวิธีรันด้านล่าง
-3. อ่านคำอธิบายในแต่ละโฟลเดอร์; ส่วนที่ไม่ใช้กับงาน symbolic ระบุไว้ว่า Not applicable
-4. ติดตามงานใน [GitHub Issues](https://github.com/Beam004MECU/Cam-Follower-Symbolic/issues) และอ่านการตัดสินใจออกแบบใน [docs/design.md](docs/design.md) กับผลตรวจใน [experiments/README.md](experiments/README.md)
-5. ตรวจ [LICENSE](LICENSE) ก่อนนำงานไปใช้ต่อหรือเผยแพร่ซ้ำ
-
-## Project overview
-
-- **Project name:** Cam and Follower — Symbolic Analysis and Synthesis
-- **Problem / purpose:** วิเคราะห์ระยะยก ความเร็ว ความเร่ง และผิวแคมด้วย symbolic พร้อมสังเคราะห์แคมยกสองระดับจากข้อจำกัดมุมกดและตรวจสอบเรขาคณิต
-- **Team:** นายภูริณัฐ ไชยขาว (Phurinat Chaikaow) — ผู้จัดทำโครงงาน การวิเคราะห์ การจำลอง และเอกสาร · Mechanical Engineering, Chulalongkorn University
-- **Status:** ผ่านการรัน MATLAB และตรวจผลอิสระแล้วทั้ง Main และ Synthesis (validation revision 2, 23 ต.ค. 2026)
-- **Last updated:** 2026-10-23
-- **Technique:** Symbolic Mathematics
-
-**วิธีรัน:** MATLAB พร้อม Symbolic Math Toolbox → เปิด `RUN_ALL.m` แล้วกด Run บันทึก AVI งานละ 3 รอบอัตโนมัติ เมื่อจบแล้วกด **Play / Pause** เพื่อดูต่อเนื่อง หรือ **Reset** เพื่อกลับมุมเริ่มต้น ปรับ **Playback speed** ได้ตั้งแต่ 0.1× ถึง 2× (เริ่มที่ 0.25×) โดยไม่เปลี่ยนความเร็ว 60 rpm ที่ใช้คำนวณและบันทึก AVI
-
-แสดงกราฟระยะยก ความเร็ว และความเร่ง พร้อมกลไกในหน้าต่างเดียวกัน ผล MAT ภาพ และวิดีโอใน repository มาจากการรัน revision 2 วันที่ 23 ต.ค. 2026 และผ่านการเทียบข้อมูลกับตัวตรวจอิสระแล้ว ดู [ผลตรวจ](experiments/README.md)
-
-## Repository structure
-
-| Path | Purpose |
-|---|---|
-| [hardware/mechanical/](hardware/mechanical/) | CAD แบบผลิตและประกอบ: Not applicable สำหรับงานนี้; แบบจำลองอยู่ใน simulation |
-| [hardware/electronics/](hardware/electronics/) | วงจร PCB และสายไฟ: Not applicable |
-| [hardware/bom.csv](hardware/bom.csv) | คงหัวตาราง BOM ตามเทมเพลต; ไม่มีรายการจัดซื้อฮาร์ดแวร์ |
-| [software/firmware/](software/firmware/) | ไมโครคอนโทรลเลอร์: Not applicable |
-| [software/application/](software/application/) | สภาพแวดล้อม MATLAB การติดตั้งและวิธีรัน |
-| [machine-skills/](machine-skills/) | คำสั่งเครื่องจักร: Not applicable |
-| [simulation/](simulation/) | โค้ด symbolic แบบจำลอง และการสร้างภาพเคลื่อนไหว |
-| [docs/](docs/) | การติดตั้ง ใช้งาน แก้ปัญหา และหลักการออกแบบ |
-| [media/](media/) | ภาพกลไก กราฟ และวิดีโอสาธิต |
-| [experiments/](experiments/) | วิธีตรวจสอบ ผล MATLAB และผลคำนวณอิสระ |
-| [publications/](publications/) | สถานะสิ่งพิมพ์และแหล่งอ้างอิง |
-
-## Collaboration and file practices
-
-ใช้ชื่อไฟล์และ commit ที่อธิบายการเปลี่ยนแปลง เก็บ source ที่แก้ไขได้ และบันทึกงานใน Issues หน่วยคำนวณคือ mm, s และ rad; ใช้องศาสำหรับแสดงผล รุ่นซอฟต์แวร์และเงื่อนไขอยู่ใน [simulation/README.md](simulation/README.md) ไม่เก็บข้อมูลลับ ไฟล์ชั่วคราว หรือผลส่งออกซ้ำโดยไม่จำเป็น; พิจารณา Git LFS เมื่อมีไฟล์ขนาดใหญ่
-
-## Safety and validation
-
-งานนี้เป็นการจำลองจลนศาสตร์ ไม่มีการทดสอบฮาร์ดแวร์ สมมติชิ้นส่วนแข็งเกร็งและคงสัมผัส ไม่ได้ตรวจแรง ความแข็งแรง หรือการหลุดสัมผัส จึงยังใช้ผลนี้รับรองการผลิตหรือความปลอดภัยของเครื่องจริงไม่ได้ ตรวจผลด้วย assertions ใน MATLAB และการคำนวณอิสระตาม [experiments/README.md](experiments/README.md); ยังไม่มีผลวัดจากชิ้นงานจริง
+วิเคราะห์กลไกแคม–ตัวตามด้วย Symbolic Mathematics และสังเคราะห์แคมยกสองระดับ ผ่านการรัน MATLAB และตรวจผลอิสระแล้วทั้งสองงาน (revision 2, 23 ต.ค. 2026)
 
 ## Symbolic Analysis
 
+![MATLAB symbolic analysis](media/main_matlab.png)
+
+[ภาพเคลื่อนไหวจาก MATLAB (AVI)](media/main_mechanism.avi)
+
 แคมหมุนตามเข็มนาฬิกา ขับตัวตามลูกกลิ้งให้เลื่อนในแนวดิ่งผ่านศูนย์แคม ระยะยก 20 mm รัศมีฐาน 40 mm รัศมีลูกกลิ้ง 5 mm ความเร็ว 60 rpm รอบหนึ่งแบ่งเป็นยก–ค้างบน–ลดลง–ค้างล่าง ช่วงละ 90°
 
-โค้ดอินทิเกรตความเร่งไซน์และแก้ค่าคงที่ด้วย symbolic จากนั้นหาอนุพันธ์และสร้างผิวแคมด้วยแนวปกติของเส้นพิตช์ ภาพเคลื่อนไหวใช้พิกัดจากแบบจำลองเดียวกัน ไม่มีการเลื่อนลูกกลิ้งด้วยสมการคนละชุด
+โค้ดอินทิเกรตความเร่งไซน์และแก้ค่าคงที่ด้วย symbolic จากนั้นหาอนุพันธ์และสร้างผิวแคมด้วยแนวปกติของเส้นพิตช์ ภาพเคลื่อนไหวใช้พิกัดจากแบบจำลองเดียวกัน
 
 ```math
 F(u)=u-\frac{\sin(2\pi u)}{2\pi},\quad s=hF(u),\quad v=\omega\frac{ds}{d\theta},\quad a=\omega^2\frac{d^2s}{d\theta^2}.
@@ -81,13 +31,18 @@ F(u)=u-\frac{\sin(2\pi u)}{2\pi},\quad s=hF(u),\quad v=\omega\frac{ds}{d\theta},
 
 **DOF:** แบบเต็มมี $n=4$, $j_1=3$, $j_2=1$ จึงได้ $M=3(n-1)-2j_1-j_2=2$ โดยหนึ่งตัวแปรเป็นการหมุนอิสระของลูกกลิ้ง ซึ่งไม่เปลี่ยนระยะยก เมื่อละตัวแปร passive นี้ แบบจำลองอินพุต–เอาต์พุตมี **DOF = 1** กำหนดมุมแคมแล้วหาระยะยกได้ ภาพเคลื่อนไหวไม่กำหนดการหมุนรอบตัวเองของลูกกลิ้ง และไม่ได้อ้างว่ากลิ้งไม่ไถล
 
-*ผล MATLAB revision 2 — 23 ต.ค. 2026*
-
-![MATLAB symbolic analysis](media/main_matlab.png)
-
-[ภาพเคลื่อนไหวจาก MATLAB (AVI)](media/main_mechanism.avi)
-
 ช่วงทำงานของศูนย์ลูกกลิ้งในงานหลัก: $x=0$, $45\le y\le65$ mm
+
+## โค้ดและการรัน
+
+| ไฟล์ | หน้าที่ |
+|---|---|
+| [cam_model.m](simulation/cam_model.m) | สร้างกฎการเคลื่อนที่ด้วย symbolic และคำนวณผิวแคม |
+| [run_main.m](simulation/run_main.m) | วิเคราะห์และแสดงกลไกงานหลัก |
+| [run_bonus.m](simulation/run_bonus.m) | สังเคราะห์แคมยกสองระดับจากข้อจำกัดมุมกด |
+| [RUN_ALL.m](RUN_ALL.m) | รันทั้งสองงาน |
+
+**การรัน:** MATLAB พร้อม Symbolic Math Toolbox → `RUN_ALL.m` แสดงกลไกกับกราฟ s, v, a และบันทึกวิดีโอ ปุ่ม Play/Pause, Reset และ Playback speed ใช้ดูผลต่อได้; ความเร็วเล่นไม่เปลี่ยนค่า 60 rpm ที่ใช้คำนวณ
 
 ## Synthesis
 
@@ -110,13 +65,20 @@ R_b \ge \max_\theta\left(\frac{|s_\theta|}{\tan30^\circ}-R_r-s\right).
 
 ผลจาก MATLAB สอดคล้องกับการคำนวณอิสระ ให้รัศมีฐานขั้นต่ำจากมุมกด 33.385 mm เลือก **33.5 mm** มุมกดสูงสุดประมาณ **29.941°** ช่วงค้างและช่วงยกต่อกันด้วยความเร็วและความเร่งเป็นศูนย์ที่รอยต่อ
 
-*ผล MATLAB revision 2 — 23 ต.ค. 2026*
-
 ![MATLAB stepped synthesis](media/bonus_matlab.png)
 
 [ภาพเคลื่อนไหวจาก MATLAB (AVI)](media/bonus_mechanism.avi) · [ผลตรวจ](experiments/README.md)
 
-**สมมติฐาน:** ชิ้นส่วนแข็งเกร็ง คงสัมผัส และแคมหมุนด้วยความเร็วคงที่ เป็นการวิเคราะห์เชิงจลนศาสตร์ รายละเอียดสมการอยู่ใน [design.md](docs/design.md)
+## ไฟล์ประกอบ
+
+| โฟลเดอร์ | เนื้อหา |
+|---|---|
+| [simulation/](simulation/) | โค้ด symbolic และภาพเคลื่อนไหว |
+| [docs/](docs/) | สมการและหลักการออกแบบ |
+| [media/](media/) | ภาพและวิดีโอผล MATLAB |
+| [experiments/](experiments/) | ผล MAT และหลักฐานการตรวจสอบ |
+
+**ขอบเขต:** แบบจำลองจลนศาสตร์ ชิ้นส่วนแข็งเกร็ง คงสัมผัส และความเร็วแคมคงที่; ไม่ได้วิเคราะห์แรง ความแข็งแรง หรือการหลุดสัมผัส หน่วย mm, s และ rad
 
 ## อ้างอิง
 

@@ -1,14 +1,15 @@
 # Simulation
 
-- `run_main.m`: main symbolic analysis and animation.
-- `run_bonus.m`: new synthesis problem and animation.
-- `cam_model.m`: symbolic derivation, motion, pitch curve and roller offset.
-- `validate_cam.m`: assertions, derivatives in every stage and numerical geometric checks.
-- `recover_lift.m`: independently reconstruct follower lift from the complete polygonal cam surface.
-- `render_cam.m`: visible mechanism, displacement/velocity/acceleration plots, PNG and AVI.
+MATLAB พร้อม Symbolic Math Toolbox → [RUN_ALL.m](../RUN_ALL.m)
 
-Run `RUN_ALL.m` in the repository root for both tasks and a diagnostic ZIP. Requires MATLAB with Symbolic Math Toolbox. Uses only MATLAB base routines besides symbolic operations; no Optimization Toolbox or Simscape required. Validation revision 2 was run successfully in MATLAB with Symbolic Math Toolbox on 23 October 2026. Returned motion and cam arrays passed the independent Python comparison for both tasks. Parameters are in the two entry functions; the synthesis uses a 30-degree pressure limit and the six-stage schedule listed in the root README.
+| ไฟล์ | หน้าที่ |
+|---|---|
+| `cam_model.m` | สร้างสมการ symbolic และผิวแคม |
+| `run_main.m` | งานหลัก: ระยะยก 20 mm รัศมีฐาน 40 mm |
+| `run_bonus.m` | Synthesis: ระยะยก 0 → 10 → 25 → 0 mm มุมกดไม่เกิน 30° |
+| `render_cam.m` | แสดงกลไก กราฟ s/v/a และบันทึกภาพกับวิดีโอ |
+| `install_cam_controls.m` | ปุ่มเล่น–หยุด เริ่มใหม่ และปรับความเร็วเล่น |
+| `validate_cam.m`, `recover_lift.m` | ตรวจผลคำนวณและการเคลื่อนที่จากผิวแคม |
 
-`install_cam_controls.m` adds nonblocking Play/Pause and Reset after recording. RUN_ALL enables controls only after both cases and the result ZIP are complete. Closing a figure stops and deletes only its own timer. Interactive playback does not append to the AVI.
-
-The returned ZIP now contains the source snapshot and sampled MATLAB motion/profile arrays. `validationVersion=2` identifies the new numerical checks. Physical velocity and acceleration use the fixed input speed, not the playback speed multiplier.
+ผลที่สร้างใหม่อยู่ใน `simulation/results/` และ `RETURN_TO_REVIEW_*.zip` ที่โฟลเดอร์หลัก
+ผล revision 2 ที่ตรวจผ่านแล้วอยู่ใน [experiments/](../experiments/) และ [media/](../media/)
