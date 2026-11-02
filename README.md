@@ -80,6 +80,12 @@ R_b \ge \max_\theta\left(\frac{|s_\theta|}{\tan30^\circ}-R_r-s\right).
 
 **ขอบเขต:** แบบจำลองจลนศาสตร์ ชิ้นส่วนแข็งเกร็ง คงสัมผัส และความเร็วแคมคงที่; ไม่ได้วิเคราะห์แรง ความแข็งแรง หรือการหลุดสัมผัส หน่วย mm, s และ rad
 
+## สถานะชุดส่ง
+
+ตรวจเทียบรายการส่งใน Term Project 2569 เมื่อ 3 พ.ย. 2026: เนื้อหา symbolic, กลไก, กราฟ s/v/a และ Synthesis มีหลักฐานตรวจผ่านแล้ว ส่วน repository ยังไม่มีรายงาน `.docx`, `Mechanism.mlx`, ภาพ `Render.jpg` และ ZIP ชุดส่งครบรายการ วิดีโอ AVI มีแล้วใน `media/` แต่ยังใช้ชื่อแยก Main/Bonus
+
+รายงานพิมพ์และโมเดลจริง A4 เป็นรายการระดับทีมในเอกสารโจทย์เดิม ซึ่งยังยืนยันสถานะจาก repository นี้ไม่ได้ รายการค้างติดตามใน [Issue #1](https://github.com/Beam004MECU/Cam-Follower-Symbolic/issues/1)
+
 ## อ้างอิง
 
 - [Carnegie Mellon University — Cams](https://www.cs.cmu.edu/~rapidproto/mechanisms/chpt6.html): กลไกแคม การกลับการเคลื่อนที่ และ passive roller DOF
