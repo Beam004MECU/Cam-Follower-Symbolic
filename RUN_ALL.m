@@ -1,33 +1,6 @@
-% Run once from the MATLAB Editor. Requires MATLAB + Symbolic Math Toolbox.
-% Produces two visible animations and one ZIP to return for verification.
-root=fileparts(mfilename('fullpath'));
-oldPath=path; pathCleanup=onCleanup(@()path(oldPath));
-addpath(fullfile(root,'simulation'));
-stamp=datestr(now,'yyyymmdd_HHMMSS');
-resultRoot=fullfile(root,'simulation','results');
-if ~exist(resultRoot,'dir'), mkdir(resultRoot); end
-runFolder=tempname(resultRoot); mkdir(runFolder);
-diary(fullfile(runFolder,'MATLAB_log.txt'));
-try
-    fprintf('Validation revision: 2\nRun: %s\nMATLAB: %s\n',stamp,version);ver;
-    % Preserve the exact source used for this run in the returned archive.
-    sourceFolder=fullfile(runFolder,'source');mkdir(sourceFolder);
-    copyfile(fullfile(root,'simulation','*.m'),sourceFolder);
-    copyfile(fullfile(root,'RUN_ALL.m'),sourceFolder);
-    mainResult=run_main(fullfile(runFolder,'main'),true,true);
-    bonusResult=run_bonus(fullfile(runFolder,'bonus'),true,true);
-    save(fullfile(runFolder,'results.mat'),'mainResult','bonusResult');
-    fid=fopen(fullfile(runFolder,'RUN_COMPLETE.txt'),'w');
-    fprintf(fid,'Both tasks completed with all assertions passing.\n');fclose(fid);
-catch ME
-    report=getReport(ME,'extended','hyperlinks','off');disp(report);
-    fid=fopen(fullfile(runFolder,'ERROR_REPORT.txt'),'w');fprintf(fid,'%s',report);fclose(fid);
-end
-diary off;
-archive=fullfile(root,['RETURN_TO_REVIEW_' stamp '.zip']);
-zip(archive,{'*'},runFolder);
-fprintf('\nSend this ZIP for verification:\n%s\n',archive);
-
-% Enable optional continuous playback only after all output collection is done.
-controls=findall(groot,'Tag','CamPlaybackControl');
-set(controls,'Enable','on');
+% Cam and Follower: main analysis and synthesis.
+% Requires MATLAB with Symbolic Math Toolbox.
+projectRoot=fileparts(mfilename('fullpath'));
+addpath(fullfile(projectRoot,'simulation'));
+mainResult=run_main(fullfile(projectRoot,'results','main'),true);
+bonusResult=run_bonus(fullfile(projectRoot,'results','bonus'),true);
