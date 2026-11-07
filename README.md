@@ -9,7 +9,8 @@
 
 | ไฟล์ | เนื้อหา |
 |---|---|
-| [Report.docx](Report.docx) · [Report.pdf](Report.pdf) | รายงาน 4 หน้า |
+| [Report.docx](Report.docx) | รายงาน 2 หน้า |
+| [Report.pdf](Report.pdf) | รายงาน 2 หน้า สำหรับพิมพ์ |
 | [Mechanism.mlx](Mechanism.mlx) | Symbolic analysis และคำสั่งรัน |
 | [Mechanism.avi](Mechanism.avi) | ภาพเคลื่อนไหวพร้อมกราฟ s/v/a |
 | [Render.jpg](Render.jpg) | ภาพกลไกและกราฟ |
